@@ -7,6 +7,7 @@ import {
 
 const initialState = {
     pokemon: {},
+    pokemonEvolutions: {},
     errorPokemon: undefined,
     isFetchingPokemon: false
 };
