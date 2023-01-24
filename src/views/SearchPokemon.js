@@ -7,12 +7,14 @@ const SearchPokemon = () => {
     const [searchText, setSearchText] = useState("");
     const navigate = useNavigate();
     const searchPokemon = () => {
-        navigate(`/pokemon/${searchText}`);
+        if(searchText)
+            navigate(`../pokemon/${searchText}`);
     }
     const handleKeyDown = e => {
         if (e.key === "Enter")
-            searchPokemon()
+            searchPokemon();
     }
+
     return(<div>
         <input type="text" placeholder="Introduce name" onChange={({target: {value}})=> setSearchText(value)} onKeyDown={handleKeyDown}/>
         <button onClick={searchPokemon}><FontAwesomeIcon icon={faMagnifyingGlass}/></button>

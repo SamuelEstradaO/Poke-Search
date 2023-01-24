@@ -14,7 +14,7 @@ export const fetchPokemon = name => async (dispatch) => {
         const { data: evolutionChain } = await axios.get(speciesData.evolution_chain.url);
         console.log(evolutionChain);
         dispatch(successFetchingPokemon({data,evolutionChain}));
-    } catch (error) {
-        dispatch(errorFetchingPokemon({error}));
+    } catch ({response}) {
+        dispatch(errorFetchingPokemon({error: response.status}));
     }
 }

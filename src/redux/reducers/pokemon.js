@@ -8,7 +8,7 @@ import {
 const initialState = {
     pokemon: {},
     pokemonEvolutions: {},
-    errorPokemon: undefined,
+    error: undefined,
     isFetchingPokemon: false
 };
 
@@ -17,8 +17,10 @@ const pokemonReducer = createReducer(initialState, builder => {
         .addCase(startFetchingPokemon.toString(), (state, action) => {
             return {
                 ...state,
-                errorPokemon: undefined,
                 isFetchingPokemon: true,
+                pokemon: {},
+                pokemonEvolutions: {},
+                error: undefined
             }
         })
         .addCase(successFetchingPokemon.toString(), (state, action) => {
@@ -32,7 +34,7 @@ const pokemonReducer = createReducer(initialState, builder => {
         .addCase(errorFetchingPokemon.toString(), (state, action) => {
             return {
                 ...state,
-                errorPokemon: action.payload.error,
+                error: action.payload.error,
                 isFetchingPokemon: false,
             }
         })
