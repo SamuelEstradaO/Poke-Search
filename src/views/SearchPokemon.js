@@ -8,7 +8,7 @@ const SearchPokemon = () => {
     const navigate = useNavigate();
     const searchPokemon = () => {
         if(searchText)
-            navigate(`../pokemon/${searchText}`);
+            navigate(`../pokemon/${searchText.toLowerCase()}`);
     }
     const handleKeyDown = e => {
         if (e.key === "Enter")

@@ -23,12 +23,13 @@ const pokemonReducer = createReducer(initialState, builder => {
                 error: undefined
             }
         })
-        .addCase(successFetchingPokemon.toString(), (state, action) => {
+        .addCase(successFetchingPokemon.toString(), (state, {payload: {data, evolutionChain}}) => {
+            data.name = data.name.charAt(0).toUpperCase() + data.name.slice(1)
             return {
                 ...state,
                 isFetchingPokemon: false,
-                pokemon: action.payload.data,
-                pokemonEvolutions: action.payload.evolutionChain,
+                pokemon: data,
+                pokemonEvolutions: evolutionChain,
             }
         })
         .addCase(errorFetchingPokemon.toString(), (state, action) => {

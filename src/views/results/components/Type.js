@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 const P = styled.p`
     display: inline-block;
-    background-color: ${({theme,pokeType})=> theme[pokeType].dark};
-    background-image: linear-gradient(${({pokeType, theme})=> theme[pokeType].light},${({pokeType, theme})=> theme[pokeType].dark} 50%,${({pokeType, theme})=> theme[pokeType].light});
+    background-color: ${({theme:{types},pokeType})=> types[pokeType].dark};
+    background-image: linear-gradient(${({pokeType, theme:{types}})=> types[pokeType].light} 0 5%,${({pokeType, theme:{types}})=> types[pokeType].dark} 40% 60%,${({pokeType, theme:{types}})=> types[pokeType].light} 95% 100%);
     border-radius: 6px;
     padding: 3px 6px;
     margin: 0 1px;
@@ -12,8 +12,9 @@ const P = styled.p`
 `
 
 const Type = ({type}) =>{
+    const capType = type.charAt(0).toUpperCase() + type.slice(1);
     return (<P pokeType={type}>
-        {type}
+        {capType}
     </P>)
 }
 

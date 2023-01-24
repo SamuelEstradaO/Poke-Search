@@ -16,14 +16,18 @@ const Div = styled.div`
         "sprite info ."
         "sprite info ."
         "evolutions evolutions evolutions";
+        align-items: center; 
     & img{
         grid-area: ${({area})=> area};
-        height: 100%;
+        display: inline-block;
+        justify-self: end;
+        height: 80%;
     }
 `
 const H2 = styled.h2`
     grid-area: name;
     text-align: center;
+    font-size: ${({theme}) => theme.font.size.large}
 `
 
 const Results = () => {
@@ -34,7 +38,6 @@ const Results = () => {
     const { pokemon, pokemonEvolutions } = useSelector(pokemonInfoSel)
     const isFetchingPokemon = useSelector(isFetchingPokemonSel, shallowEqual);
     const errorFetchingPokemon = useSelector(errorFetchingPokemonSel, shallowEqual);
-
     useEffect(() => {
         dispatch(fetchPokemon(pokemonName));
     }, [pokemonName])
