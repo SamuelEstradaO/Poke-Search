@@ -9,6 +9,7 @@ const P = styled.p`
     margin: 0 1px;
     -webkit-text-stroke: 1px black;
     -webkit-text-fill-color: white;
+    border: 2px solid black;
 `
 
 const Type = ({type}) =>{

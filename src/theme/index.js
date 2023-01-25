@@ -38,7 +38,7 @@ const theme = {
 export const GlobalStyler = createGlobalStyle`
     *{
         box-sizing: border-box;
-        font-size: 18px;
+        font-size: 16px;
         font-family: 'Press Start 2P', cursive;
     }
 `

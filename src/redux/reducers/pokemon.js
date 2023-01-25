@@ -7,9 +7,10 @@ import {
 
 const initialState = {
     pokemon: {},
-    pokemonEvolutions: {},
+    pokemonEvolutions: [],
     error: undefined,
-    isFetchingPokemon: false
+    isFetchingPokemon: false,
+    isFetchingEvolution: false
 };
 
 const pokemonReducer = createReducer(initialState, builder => {
@@ -19,17 +20,16 @@ const pokemonReducer = createReducer(initialState, builder => {
                 ...state,
                 isFetchingPokemon: true,
                 pokemon: {},
-                pokemonEvolutions: {},
+                pokemonEvolutions: [],
                 error: undefined
             }
         })
-        .addCase(successFetchingPokemon.toString(), (state, {payload: {data, evolutionChain}}) => {
-            data.name = data.name.charAt(0).toUpperCase() + data.name.slice(1)
+        .addCase(successFetchingPokemon.toString(), (state, action) => {
             return {
                 ...state,
                 isFetchingPokemon: false,
-                pokemon: data,
-                pokemonEvolutions: evolutionChain,
+                pokemon: action.payload.data,
+                pokemonEvolutions: action.payload.evolutionChain,
             }
         })
         .addCase(errorFetchingPokemon.toString(), (state, action) => {
