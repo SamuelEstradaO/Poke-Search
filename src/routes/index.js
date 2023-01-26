@@ -4,17 +4,19 @@ import {
     Route,
     RouterProvider,
 } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "../views/components/Header";
 import NotImplemented from "../views/NotImplemented";
 import SearchPokemon from "../views/SearchPokemon";
 import Results from "../views/results";
-import ErrorComponent from "../components/ErrorComponent";
+import ErrorComponent from "../views/components/ErrorComponent";
+import Index from "../views";
 
 const Routes = () => {
     const router = createBrowserRouter(createRoutesFromElements(
         <Route path="/" element={<Header />} >
             <Route errorElement={<ErrorComponent />} />
-            <Route index element={<SearchPokemon />} />
+            <Route index element={<Index />} />
+            <Route path="search" element={<SearchPokemon />}/>
             <Route path="pokemon/NotFound" element={<ErrorComponent />} />
             <Route path="pokemon/:pokemonName" element={<Results />} />
             <Route path="*" element={<NotImplemented />} />

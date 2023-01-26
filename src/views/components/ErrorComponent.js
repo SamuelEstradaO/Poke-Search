@@ -1,7 +1,7 @@
 import { useSelector, shallowEqual } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { errorFetchingPokemonSel, isFetchingPokemonSel } from "../redux/selectors";
+import { errorFetchingPokemonSel, isFetchingPokemonSel } from "../../redux/selectors";
 
 const ErrorComponent = () => {
     const errorFetchingPokemon = useSelector(errorFetchingPokemonSel, shallowEqual);

@@ -7,6 +7,7 @@ import { fetchPokemon } from "../../redux/actions/pokemon";
 import { pokemonInfoSel, isFetchingPokemonSel, errorFetchingPokemonSel } from "../../redux/selectors";
 import Info from "./components/Info";
 import Evolutions from "./components/Evolutions";
+import { H2 } from "../../theme";
 
 const Div = styled.div`
     display: grid;
@@ -26,12 +27,6 @@ const Img = styled.img`
     justify-self: end;
     height: 100%;
     object-fit: contain;
-`
-
-const H2 = styled.h2`
-    grid-area: name;
-    text-align: center;
-    font-size: ${({ theme }) => theme.font.size.large};
 `
 
 const Results = () => {
@@ -55,7 +50,7 @@ const Results = () => {
     // data.name.charAt(0).toUpperCase() + data.name.slice(1)
     return (<>
         {!isFetchingPokemon && !errorFetchingPokemon && !firstLoad && (<Div>
-            <H2>{pokemon.name?.replace("-", " ")}</H2>
+            <H2 gridArea="name">{pokemon.name?.replace("-", " ")}</H2>
             <Img src={pokemon.sprites?.front_default} alt={pokemon?.name} />
             <Info gridArea="info" />
             <Evolutions gridArea="evolutions" />

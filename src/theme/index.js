@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 const theme = {
     types: {
@@ -26,11 +26,18 @@ const theme = {
         bannerText: "#EFC707",
         bannerTextOutline: "#50609e"
     },
-    font:{
+    font: {
         size: {
-            large: "2em",
-            medium: "1.5em",
-            small: "1em"
+            mobile: {
+                large: "5vw",
+                medium: "4vw",
+                small: "1vw"
+            },
+            desktop:{
+                large: "2rem",
+                medium: "1.5rem",
+                small: "1rem"
+            }
         }
     }
 };
@@ -41,6 +48,20 @@ export const GlobalStyler = createGlobalStyle`
         font-size: 16px;
         font-family: 'Press Start 2P', cursive;
     }
+`
+
+export const H2 = styled.h2`
+    grid-area: ${({ gridArea }) => gridArea};
+    text-align: center;
+    font-size: ${({ theme }) => theme.font.size.mobile.large};
+    @media (min-width: 768px){
+        font-size: ${({ theme }) => theme.font.size.desktop.large};
+    }
+`
+export const Img = styled.img`
+object-fit: contain;
+aspect-ratio: 1/1;
+width: 100%;
 `
 
 export default theme;
