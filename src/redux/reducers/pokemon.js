@@ -2,7 +2,9 @@ import { createReducer } from "@reduxjs/toolkit";
 import {
     startFetchingPokemon,
     successFetchingPokemon,
-    errorFetchingPokemon
+    errorFetchingPokemon,
+    startFetchingAllPokemon,
+    successFetchingAllPokemon,
 } from "../actions/pokemon"
 
 const initialState = {
@@ -10,7 +12,8 @@ const initialState = {
     pokemonEvolutions: [],
     error: undefined,
     isFetchingPokemon: false,
-    isFetchingEvolution: false
+    isFetchingEvolution: false,
+    pokemons: {}
 };
 
 const pokemonReducer = createReducer(initialState, builder => {
@@ -37,6 +40,21 @@ const pokemonReducer = createReducer(initialState, builder => {
                 ...state,
                 error: action.payload.error,
                 isFetchingPokemon: false,
+            }
+        })
+        .addCase(startFetchingAllPokemon.toString(), (state, action) => {
+            return {
+                ...state,
+                isFetchingPokemon: true,
+                pokemons: {},
+                error: undefined
+            }
+        })
+        .addCase(successFetchingAllPokemon.toString(), (state, action) => {
+            return {
+                ...state,
+                isFetchingPokemon: false,
+                pokemons: action.payload.data,
             }
         })
         .addDefaultCase((state, action)=> {

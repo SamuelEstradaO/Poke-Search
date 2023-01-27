@@ -17,6 +17,7 @@ const PokemonLink = styled(Link)`
     background-color: rgba(0,0,0, 0.4);
     &:hover{
         background-color: rgba(0,0,0, 0.7);
+        transform: scale(1.1, 1.1);
     }
 `
 
@@ -28,8 +29,8 @@ const Img = styled.img`
 
 const PokemonEvolve = ({ evolution }) => {
 
-    return (<PokemonLink to={`/pokemon/${evolution.name}`} >
-        <Img src={evolution.sprite} alt={evolution.name} />
+    return (<PokemonLink to={`/pokemon/${evolution.url.slice(42, -1)}`} >
+        <Img src={evolution?.sprite} alt={evolution.name} />
         <H6>{evolution.name.replace("-", " ")}</H6>
     </PokemonLink>)
 }

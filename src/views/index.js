@@ -8,7 +8,7 @@ const Container = styled.div`
     grid-template-rows: 1fr 1fr 1fr;
     justify-content: center;
     justify-items: center;
-    height: 100vh;
+    height: 90vh;
     width: 100%;
     row-gap: 5vh;
     padding: 10%;
@@ -28,7 +28,7 @@ const options = [
     {
         icon: faQuestion,
         text: "Show random pokemon",
-        url: "random-pokemon"
+        url: "/pokemon/random"
     },
 ];
 

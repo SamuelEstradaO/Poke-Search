@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-import { H2 } from "../../theme";
+import { FontAwesome, H2 } from "../../theme";
 
 const OptionLink = styled(Link)`
     text-decoration: none;
@@ -20,6 +20,10 @@ const OptionLink = styled(Link)`
     
     -webkit-text-stroke: 1px black;
     -webkit-text-fill-color: white;
+    &:hover{
+        background-color: rgba(1, 252, 231,0.8);
+        transform: scale(1.1, 1.1);
+    }
 `
 const Icon = styled.span`
     aspect-ratio: 1/1;
@@ -29,20 +33,9 @@ const Icon = styled.span`
 const Text = styled(H2)`
     padding-left: 10px; 
 `
-const FontAwesome = styled(FontAwesomeIcon)`
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: calc(${({ theme }) => theme.font.size.mobile.large}*2.5);
-    @media (min-width: 768px){
-        font-size: calc(${({ theme }) => theme.font.size.desktop.large}*2.5);
-    }
-`
+
 
 const Option = ({ option }) => {
-    console.log(option);
     return (<OptionLink to={option.url}>
         <Icon><FontAwesome icon={option.icon} /></Icon>
         <Text >{option.text}</Text>

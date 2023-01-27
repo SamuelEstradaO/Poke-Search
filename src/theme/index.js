@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled, { createGlobalStyle } from "styled-components";
 
 const theme = {
@@ -58,10 +59,16 @@ export const H2 = styled.h2`
         font-size: ${({ theme }) => theme.font.size.desktop.large};
     }
 `
-export const Img = styled.img`
-object-fit: contain;
-aspect-ratio: 1/1;
-width: 100%;
+export const FontAwesome = styled(FontAwesomeIcon)`
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: calc(${({ theme }) => theme.font.size.mobile.large}*2.5);
+    @media (min-width: 768px){
+        font-size: calc(${({ theme }) => theme.font.size.desktop.large}*2.5);
+    }
 `
 
 export default theme;
