@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllPokemon, fetchPokemon } from "../../redux/actions/pokemon";
 import styled from "styled-components";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 
 import { pokemonInfoSel } from "../../redux/selectors";
 import Preview from "./components/Preview";
@@ -26,7 +26,7 @@ const PokemonList = styled.div`
     justify-items: center;
     row-gap: 1rem;
     height: 80%;
-    border: 1px solid aqua;
+    margin: 0 15%;
     overflow-x: hidden;
     overflow-y: auto;
     background-color: #ededed;
@@ -35,7 +35,7 @@ const PokemonList = styled.div`
 const AllPokemon = () => {
     const { pokemons, pokemon } = useSelector(pokemonInfoSel);
     const dispatch = useDispatch();
-    const [preview, setPreview] = useState({name: "?????",faSearch})
+    const [preview, setPreview] = useState({name: "?????",faQuestion})
     useEffect(() => {
         dispatch(fetchAllPokemon());
     }, []);

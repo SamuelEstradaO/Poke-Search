@@ -6,6 +6,14 @@ const Button = styled.button`
     border-radius: 10px;
     padding: 1rem 0;
     width: 80%;
+    &:hover{
+        border: 2px solid red;
+        cursor: pointer;
+    }
+    &:focus{
+        background-color: #c91d19;
+        transform: scale(1.05,1.05);
+    }
     & span{
         font-size: ${({ theme }) => theme.font.size.mobile.small};
     @media (min-width: 768px){
@@ -19,7 +27,7 @@ const Button = styled.button`
 `
 
 const ListItem = ({pokemon, onClick}) => {
-    return (<Button onClick={onClick}>
+    return (<Button onFocus={onClick}>
         <span>#{pokemon.url.slice(42, -1)} {pokemon.name}</span>
         </Button>)    
 }
