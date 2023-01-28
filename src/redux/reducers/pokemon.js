@@ -46,6 +46,7 @@ const pokemonReducer = createReducer(initialState, builder => {
             return {
                 ...state,
                 isFetchingPokemon: true,
+                pokemon: {},
                 pokemons: {},
                 error: undefined
             }

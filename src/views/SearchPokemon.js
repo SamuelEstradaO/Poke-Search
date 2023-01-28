@@ -72,7 +72,7 @@ const SearchPokemon = () => {
     }
 
     return (<Container>
-        <Text>No. or pokemon name</Text>
+        <Text>Pokemon's name or No.</Text>
         <SearchBar>
             <Input type="text" placeholder="e.g. 150 or Mewtwo" onChange={({ target: { value } }) => setSearchText(value)} onKeyDown={handleKeyDown} />
             <Button onClick={searchPokemon}><FontAwesomeIcon icon={faMagnifyingGlass} /></Button>

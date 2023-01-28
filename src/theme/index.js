@@ -32,7 +32,7 @@ const theme = {
             mobile: {
                 large: "5vw",
                 medium: "4vw",
-                small: "1vw"
+                small: "3vw"
             },
             desktop:{
                 large: "2rem",

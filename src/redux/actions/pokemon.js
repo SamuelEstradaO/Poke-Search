@@ -40,10 +40,10 @@ export const fetchPokemon = name => async (dispatch) => {
     }
 }
 
-export const fetchAllPokemon = offset => async (dispatch) => {
+export const fetchAllPokemon = (offset=0) => async (dispatch) => {
     try {
         dispatch(startFetchingAllPokemon());
-        const { data } = await apiCall.get(`/pokemon-species`);
+        const { data } = await apiCall.get(`/pokemon-species?limit=40`);
         dispatch(successFetchingAllPokemon({ data }));
     } catch ({ response }) {
         dispatch(errorFetchingPokemon({ error: response.status }));
