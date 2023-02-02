@@ -5,6 +5,8 @@ import {
     errorFetchingPokemon,
     startFetchingAllPokemon,
     successFetchingAllPokemon,
+    startFetchingMorePokemon,
+    successFetchingMorePokemon,
 } from "../actions/pokemon"
 
 const initialState = {
@@ -12,6 +14,7 @@ const initialState = {
     pokemonEvolutions: [],
     error: undefined,
     isFetchingPokemon: false,
+    isFetchingMorePokemon: false,
     isFetchingEvolution: false,
     pokemons: {}
 };
@@ -55,6 +58,22 @@ const pokemonReducer = createReducer(initialState, builder => {
             return {
                 ...state,
                 isFetchingPokemon: false,
+                pokemons: action.payload.data,
+            }
+        })
+        .addCase(startFetchingMorePokemon.toString(), (state, action) => {
+            return {
+                ...state,
+                isFetchingMorePokemon: true,
+                pokemon: {},
+                pokemons: {},
+                error: undefined
+            }
+        })
+        .addCase(successFetchingMorePokemon.toString(), (state, action) => {
+            return {
+                ...state,
+                isFetchingMorePokemon: false,
                 pokemons: action.payload.data,
             }
         })

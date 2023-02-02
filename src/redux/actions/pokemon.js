@@ -7,8 +7,10 @@ export const errorFetchingPokemon = createAction("ERROR_FETCHING_POKEMON");
 export const successFetchingPokemon = createAction("SUCCESS_FETCHING_POKEMON");
 
 export const startFetchingAllPokemon = createAction("START_FETCHING_All_POKEMON");
-export const errorFetchingAllPokemon = createAction("ERROR_FETCHING_All_POKEMON");
 export const successFetchingAllPokemon = createAction("SUCCESS_FETCHING_ALL_POKEMON");
+
+export const startFetchingMorePokemon = createAction("START_FETCHING_MORE_POKEMON");
+export const successFetchingMorePokemon = createAction("SUCCESS_FETCHING_MORE_POKEMON");
 
 let normalizeChain = (pokemon, evolutionChain = []) => {
     evolutionChain.push(pokemon.species);
@@ -43,9 +45,19 @@ export const fetchPokemon = name => async (dispatch) => {
 export const fetchAllPokemon = (offset=0) => async (dispatch) => {
     try {
         dispatch(startFetchingAllPokemon());
-        const { data } = await apiCall.get(`/pokemon-species?limit=40`);
+        const { data } = await apiCall.get(`/pokemon-species?limit=10000`);
         dispatch(successFetchingAllPokemon({ data }));
     } catch ({ response }) {
+        dispatch(errorFetchingPokemon({ error: response.status }));
+    }
+}
+
+export const fetchMorePokemon = url => async (dispatch) => {
+    try {
+        dispatch(startFetchingMorePokemon());
+        const { data } = await axios.get(url);
+        dispatch(successFetchingMorePokemon({ data }));
+    } catch (response) {
         dispatch(errorFetchingPokemon({ error: response.status }));
     }
 }

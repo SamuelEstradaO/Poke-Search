@@ -7,6 +7,7 @@ export const errorFetchingPokemonSel = state => state.pokemonReducer.error;
 export const pokemonsSel = state => state.pokemonReducer.pokemons;
 
 export const isFetchingEvolutionSel = state => state.pokemonReducer.isFetchingEvolution;
+export const isFetchingMorePokemonsSel = state => state.pokemonReducer.isFetchingMorePokemons;
 
 export const pokemonInfoSel = createSelector(
     pokemonSel,

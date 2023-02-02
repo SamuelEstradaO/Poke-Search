@@ -37,7 +37,7 @@ const theme = {
             desktop:{
                 large: "2rem",
                 medium: "1.5rem",
-                small: "1rem"
+                small: "0.8rem"
             }
         }
     }
@@ -56,6 +56,9 @@ export const H2 = styled.h2`
     text-align: center;
     font-size: ${({ theme }) => theme.font.size.mobile.large};
     @media (min-width: 768px){
+        font-size: ${({ theme }) => theme.font.size.desktop.medium};
+    }
+    @media (min-width: 1024px){
         font-size: ${({ theme }) => theme.font.size.desktop.large};
     }
 `
@@ -68,6 +71,14 @@ export const FontAwesome = styled(FontAwesomeIcon)`
     font-size: calc(${({ theme }) => theme.font.size.mobile.large}*2.5);
     @media (min-width: 768px){
         font-size: calc(${({ theme }) => theme.font.size.desktop.large}*2.5);
+    }
+`
+export const H6 = styled.h6`
+    font-size: ${({ theme }) => theme.font.size.mobile.small};
+    margin: 1em 10% ;
+    color: white;
+    @media (min-width: 768px){
+        font-size: ${({ theme }) => theme.font.size.desktop.small};
     }
 `
 
