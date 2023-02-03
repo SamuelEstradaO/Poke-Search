@@ -13,6 +13,7 @@ const PokemonLink = styled(Link)`
     &:hover{
         background-color: rgba(0,0,0, 0.7);
         transform: scale(1.1, 1.1);
+        transition: transform 1s;
     }
 `
 

@@ -32,6 +32,7 @@ const Img = styled.img`
 const Results = () => {
     const { pokemonName } = useParams();
     const [firstLoad, setFirstLoad] = useState(true);
+    const [pokemonImg, setPokemonImg] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { pokemon } = useSelector(pokemonInfoSel)
@@ -42,17 +43,22 @@ const Results = () => {
     }, [pokemonName])
 
     useEffect(() => {
+        if(pokemon.sprites) setPokemonImg(pokemon.sprites.front_default);
+    }, [pokemon])
+
+    useEffect(() => {
         if (errorFetchingPokemon && !pokemon.name && !firstLoad) {
             navigate("/pokemon/NotFound", { replace: true });
         }
         setFirstLoad(false);
     }, [errorFetchingPokemon])
     // data.name.charAt(0).toUpperCase() + data.name.slice(1)
+    const setSprite = url => setPokemonImg(url);
     return (<>
         {!isFetchingPokemon && !errorFetchingPokemon && !firstLoad && (<Div>
             <H2 gridArea="name">{pokemon.name?.replace("-", " ")}</H2>
-            <Img src={pokemon.sprites?.front_default} alt={pokemon?.name} />
-            <Info gridArea="info" />
+            <Img src={pokemonImg} alt={pokemon?.name} />
+            <Info gridArea="info" setSprite={setSprite}/>
             <Evolutions gridArea="evolutions" />
         </Div>
         )}
