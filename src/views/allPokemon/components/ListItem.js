@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { H6 as H6Base } from "../../../theme";
+import { useNavigate } from "react-router-dom";
 
 const Button = styled.button`
+    position: relative;
     background-color: #e9b653;
     border: none;
     border-radius: 10px;
@@ -16,13 +18,14 @@ const Button = styled.button`
         width: 90%;
     }
     &:hover{
-        border: 1px solid red;
         cursor: pointer;
+        transform: scale(1.05, 1.05);
+        transition: transform 0.5s;
     }
     &:focus{
         background-color: #c91d19;
         transform: scale(1.05, 1.05);
-        
+        transition: transform 1s;
     }
     & div{
         background-color: white;
@@ -50,7 +53,11 @@ export const H6 = styled(H6Base)`
 `
 
 const ListItem = ({pokemon, handleClick}) => {
-    return (<Button onFocus={handleClick}><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="poke-ball"/>
+    const navigate = useNavigate();
+    const handleDbClick = (e) => {
+        if(e.detail >= 2) navigate(`/pokemon/${pokemon.url.slice(42, -1)}`);
+    }
+    return (<Button onFocus={handleClick} onClick={handleDbClick}><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="poke-ball"/>
         <div><H6>#{pokemon.url.slice(42, -1)} {pokemon.name}</H6></div>
         </Button>)    
 }

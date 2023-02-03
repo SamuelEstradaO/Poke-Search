@@ -68,7 +68,6 @@ const AllPokemon = () => {
         }
     }, [pokemon])
     const handleClick = (prev) => {
-        console.log("here");
         dispatch(fetchPokemon(prev.name));
     };
     return (<GridContainer>
