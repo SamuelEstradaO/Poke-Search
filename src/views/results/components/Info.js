@@ -15,6 +15,7 @@ const Div = styled.div`
         display: flex;
         align-items: center;
     }
+    white-space: break-spaces;
 `
 const Button = styled.button`
     aspect-ratio: 1/1;
@@ -43,7 +44,9 @@ const FontAwesome = styled(FontAwesomeIcon)`
 
 const Info = ({ gridArea, setSprite }) => {
     const { pokemon } = useSelector(pokemonInfoSel, shallowEqual);
+    const {flavor_text: flavorText} = pokemon.speciesData.flavor_text_entries.find( ({ language }) => language.name === "en")
     return (<Div gridArea={gridArea}>
+        <p>{flavorText}</p>
         <h4>No: {pokemon.id}</h4>
         <h4>Type: {pokemon.types?.map(({ type }, i) => <Type key={i} type={type.name} />)}</h4>
         <h4>Weight: {pokemon.weight / 10 >= 1 ? `${pokemon.weight / 10} Kg` : `${pokemon.weight * 100} gr`}.</h4>

@@ -32,6 +32,7 @@ const Button = styled.button`
     position: relative;
     &:hover{
         background-color: rgba(1, 252, 231,0.8);
+        cursor: pointer;
     }
 `
 const Text = styled(H2)`
@@ -63,7 +64,7 @@ const SearchPokemon = () => {
         if (searchText) {
             let pokemon = searchText.toLowerCase()
             pokemon = pokemon.replace(" ", "-").replace(".", "");
-            navigate(`../pokemon/${pokemon}`);
+            navigate(`../${pokemon}`);
         }
     }
     const handleKeyDown = e => {
@@ -74,7 +75,7 @@ const SearchPokemon = () => {
     return (<Container>
         <Text>Pokemon's name or No.</Text>
         <SearchBar>
-            <Input type="text" placeholder="e.g. 150 or Mewtwo" onChange={({ target: { value } }) => setSearchText(value)} onKeyDown={handleKeyDown} />
+            <Input autoFocus type="text" placeholder="e.g. 150 or Mewtwo" onChange={({ target: { value } }) => setSearchText(value)} onKeyDown={handleKeyDown} />
             <Button onClick={searchPokemon}><FontAwesomeIcon icon={faMagnifyingGlass} /></Button>
         </SearchBar>
     </Container>)

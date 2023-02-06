@@ -22,19 +22,21 @@ const Routes = () => {
         <Route path="/" element={<Header />} >
             <Route errorElement={<ErrorComponent />} />
             <Route index element={<Index />} />
-            <Route path="search" element={<SearchPokemon />}/>
-            <Route path="all-pokemons" element={<AllPokemon />} loader={() => {
-                dispatch(fetchAllPokemon());
-                return null;
-            }}/>
-            <Route path="pokemon/random" element={<Random />}/>
-            <Route path="pokemon/NotFound" element={<ErrorComponent />} />
-            <Route path="pokemon/:pokemonName" element={<Results />} />
-            <Route path="*" element={<NotImplemented />} />
+            <Route path="/pokemon" >
+                <Route index element={<AllPokemon />} loader={() => {
+                    dispatch(fetchAllPokemon());
+                    return null;
+                }} />
+                <Route path="search" element={<SearchPokemon />} />
+                <Route path="random" element={<Random />} />
+                <Route path="NotFound" element={<ErrorComponent />} />
+                <Route path=":pokemonName" element={<Results />} />
+                <Route path="*" element={<NotImplemented />} />
+            </Route>
         </Route>
-    ), {basename: "/Poke-Search"})
+    ), { basename: "/Poke-Search" })
     return (
-        <RouterProvider router={router}/>
+        <RouterProvider router={router} />
     )
 }
 

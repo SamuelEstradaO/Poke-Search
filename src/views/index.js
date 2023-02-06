@@ -18,12 +18,12 @@ const options = [
     {
         icon: faGamepad,
         text: "Show all pokemons",
-        url: "/all-pokemons"
+        url: "/pokemon"
     },
     {
         icon: faMagnifyingGlass,
         text: "Search pokemon",
-        url: "/search"
+        url: "/pokemon/search"
     },
     {
         icon: faQuestion,

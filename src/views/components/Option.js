@@ -15,14 +15,15 @@ const OptionLink = styled(Link)`
     max-width: 500px;
     display: grid;
     grid-template-columns: 1fr 3fr;
+    align-items: center;
     aspect-ratio: 4/1;
     border-radius: 1em;
-    
     -webkit-text-stroke: 1px black;
     -webkit-text-fill-color: white;
     &:hover{
         background-color: rgba(1, 252, 231,0.8);
         transform: scale(1.1, 1.1);
+        transition: transform 0.5s,background-color 1s;
     }
 `
 const Icon = styled.span`

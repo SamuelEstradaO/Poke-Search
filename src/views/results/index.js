@@ -8,6 +8,7 @@ import { pokemonInfoSel, isFetchingPokemonSel, errorFetchingPokemonSel } from ".
 import Info from "./components/Info";
 import Evolutions from "./components/Evolutions";
 import { H2 } from "../../theme";
+import FlavorText from "./components/FlavorText";
 
 const Div = styled.div`
     display: grid;
