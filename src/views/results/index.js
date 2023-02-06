@@ -8,26 +8,35 @@ import { pokemonInfoSel, isFetchingPokemonSel, errorFetchingPokemonSel } from ".
 import Info from "./components/Info";
 import Evolutions from "./components/Evolutions";
 import { H2 } from "../../theme";
-import FlavorText from "./components/FlavorText";
 
 const Div = styled.div`
     display: grid;
-    grid-template-areas: 
-        "name name name"
-        "sprite info ."
-        "sprite info ."
-        "sprite info ."
-        "sprite info ."
-        "evolutions evolutions evolutions";
-        align-items: center; 
+    align-items: center;
+    grid-template-areas:
+        "name"
+        "sprite"
+        "info"
+        "evolutions";
+    @media (min-width: 768px){
+        grid-template-areas: 
+            "name name name"
+            "sprite info ."
+            "evolutions evolutions evolutions";
+    }
 `
 
 const Img = styled.img`
     grid-area: sprite;
     display: inline-block;
-    justify-self: end;
-    height: 100%;
+    justify-self: center;
+    width: 80%;
+    max-width: 345px;
     object-fit: contain;
+    @media(min-width: 768px){
+        justify-self: end;
+        width: auto;
+        height: 70%;
+    }
 `
 
 const Results = () => {
@@ -56,7 +65,7 @@ const Results = () => {
     // data.name.charAt(0).toUpperCase() + data.name.slice(1)
     const setSprite = url => setPokemonImg(url);
     return (<>
-        {!isFetchingPokemon && !errorFetchingPokemon && !firstLoad && (<Div>
+        {!isFetchingPokemon && !errorFetchingPokemon && !firstLoad && pokemon.name &&(<Div>
             <H2 gridArea="name">{pokemon.name?.replace("-", " ")}</H2>
             <Img src={pokemonImg} alt={pokemon?.name} />
             <Info gridArea="info" setSprite={setSprite}/>

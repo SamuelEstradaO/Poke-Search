@@ -81,6 +81,24 @@ export const H6 = styled.h6`
         font-size: ${({ theme }) => theme.font.size.desktop.small};
     }
 `
+export const H4 = styled.h4`
+font-size: ${({ theme }) => theme.font.size.mobile.medium};
+@media (min-width: 768px){
+    font-size: ${({ theme }) => theme.font.size.desktop.small};
+}
+@media (min-width: 1024px){
+    font-size: ${({ theme }) => theme.font.size.desktop.medium};
+}
+`
+export const P = styled.p`
+font-size: ${({ theme }) => theme.font.size.mobile.medium};
+@media (min-width: 768px){
+    font-size: ${({ theme }) => theme.font.size.desktop.small};
+}
+@media (min-width: 1024px){
+    font-size: ${({ theme }) => theme.font.size.desktop.medium};
+}
+`
 
 export default theme;
 

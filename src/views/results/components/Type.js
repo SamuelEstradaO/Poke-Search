@@ -11,9 +11,13 @@ const P = styled.p`
     border-radius: 6px;
     padding: 3px 6px;
     margin: 0 1px;
-    -webkit-text-stroke: 1px black;
-    -webkit-text-fill-color: white;
+    color: white;
     border: 2px solid black;
+    font-size: inherit;
+    @media (min-width: 350px){
+        -webkit-text-stroke: 1px black;
+        -webkit-text-fill-color: white;
+    }
 `
 
 const Type = ({type}) =>{
