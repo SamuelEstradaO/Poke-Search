@@ -1,5 +1,6 @@
 import {
     createBrowserRouter,
+    createHashRouter,
     createRoutesFromElements,
     Route,
     RouterProvider,
@@ -18,7 +19,7 @@ import { fetchAllPokemon } from "../redux/actions/pokemon";
 
 const Routes = () => {
     const dispatch = useDispatch();
-    const router = createBrowserRouter(createRoutesFromElements(
+    const router = createHashRouter(createRoutesFromElements(
         <Route path="/" element={<Header />} >
             <Route errorElement={<ErrorComponent />} />
             <Route index element={<Index />} />
