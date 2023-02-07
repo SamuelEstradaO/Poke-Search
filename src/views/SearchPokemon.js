@@ -106,7 +106,13 @@ const SearchPokemon = () => {
     const debouncedSetSearchText = useCallback(debounce(text => setSearchText(text), 400), []);
     const navigate = useNavigate();
     const suggestedPokemons = useMemo(() => {
-        return searchText ? pokemons.results?.filter(({ name }) => name.toLowerCase().startsWith(searchText.toLowerCase())) : [];
+        let suggestions = []
+        if (searchText) {
+            suggestions = pokemons.results?.filter(({ name, url }) =>
+                name.toLowerCase().startsWith(searchText.toLowerCase()) ||
+                url.slice(42, -1).startsWith(searchText));
+        }
+        return suggestions;
     }, [searchText])
     const searchPokemon = () => {
         if (searchText) {
@@ -131,9 +137,7 @@ const SearchPokemon = () => {
                         {suggestedPokemons.map((item, i) =>
                             <Link to={`/pokemon/${item.url.slice(42, -1)}`} key={i}>
                                 <li>
-                                    <strong>{item.name.slice(0, searchText.length)}</strong>
-                                    {item.name.slice(searchText.length)}
-
+                                    #{item.url.slice(42, -1)} {item.name}
                                 </li>
                             </Link>
                         )}

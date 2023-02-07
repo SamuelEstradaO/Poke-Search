@@ -80,7 +80,9 @@ const AllPokemon = () => {
             {!search ?
                 pokemons.results?.map((pokemon, i) =>
                     <ListItem key={i} pokemon={pokemon} handleClick={() => handleClick(pokemon)} />) :
-                pokemons.results?.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()))
+                pokemons.results?.filter(({ name, url }) =>
+                    name.toLowerCase().includes(search.toLowerCase()) ||
+                    url.slice(42, -1).startsWith(search))
                     .map((pokemon, i) =>
                         <ListItem key={i} pokemon={pokemon} handleClick={() => handleClick(pokemon)} />)
             }
