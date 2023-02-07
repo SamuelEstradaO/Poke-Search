@@ -35,7 +35,7 @@ const Routes = () => {
                 <Route path="*" element={<NotImplemented />} />
             </Route>
         </Route>
-    ), { basename: "/Poke-Search" })
+    ))
     return (
         <RouterProvider router={router} />
     )
