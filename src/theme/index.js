@@ -34,7 +34,7 @@ const theme = {
                 medium: "4vw",
                 small: "3vw"
             },
-            desktop:{
+            desktop: {
                 large: "2rem",
                 medium: "1.5rem",
                 small: "0.8rem"
@@ -48,6 +48,9 @@ export const GlobalStyler = createGlobalStyle`
         box-sizing: border-box;
         font-size: 16px;
         font-family: 'Press Start 2P', cursive;
+    }
+    strong{
+        font-size: inherit;
     }
 `
 

@@ -28,7 +28,10 @@ const Routes = () => {
                     dispatch(fetchAllPokemon());
                     return null;
                 }} />
-                <Route path="search" element={<SearchPokemon />} />
+                <Route path="search" element={<SearchPokemon />} loader={() => {
+                    dispatch(fetchAllPokemon());
+                    return null;
+                }} />
                 <Route path="random" element={<Random />} />
                 <Route path="NotFound" element={<ErrorComponent />} />
                 <Route path=":pokemonName" element={<Results />} />

@@ -1,8 +1,12 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import { FontAwesome, H2 } from "../theme";
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { pokemonInfoSel } from "../redux/selectors";
 
 const Container = styled.div`
     display: flex;
@@ -21,6 +25,44 @@ const SearchBar = styled.div`
     grid-template-columns: 5fr 1fr;
     height: fit-content;
     width: 100%;
+    & div{
+        position: relative;
+        width: 100%;
+    }
+    & ul{
+        list-style: none outside;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: 20vh;
+        border: 1px solid #d4d4d4;
+        border-top: none;
+        border-bottom: none;
+        z-index: 99;
+        & li {
+            padding: 10px;
+            font-size: calc(${({ theme }) => theme.font.size.mobile.medium} * 0.8);
+            border-bottom: 1px solid #d4d4d4;
+            @media (min-width: 768px){
+                font-size: calc(${({ theme }) => theme.font.size.desktop.medium} * 0.8);
+            }
+        }
+        
+        & li:hover{
+            background-color: rgba(1, 252, 231,0.8);
+        }
+        & a{
+            text-decoration: none;
+            color: black;
+            
+        }
+    }
 `
 
 const Button = styled.button`
@@ -42,6 +84,7 @@ const Text = styled(H2)`
 
 const Input = styled.input`
     width: 100%;
+    height: 100%;
     text-align: center;
     border-radius: 1rem 0 0 1rem;
     border: 2px solid black;
@@ -58,8 +101,13 @@ const FontAwesomeIcon = styled(FontAwesome)`
 `
 
 const SearchPokemon = () => {
-    const [searchText, setSearchText] = useState("");
+    const { pokemons } = useSelector(pokemonInfoSel);
+    const [searchText, setSearchText] = useState();
+    const debouncedSetSearchText = useCallback(debounce(text => setSearchText(text), 400), []);
     const navigate = useNavigate();
+    const suggestedPokemons = useMemo(() => {
+        return searchText ? pokemons.results?.filter(({ name }) => name.toLowerCase().startsWith(searchText.toLowerCase())) : [];
+    }, [searchText])
     const searchPokemon = () => {
         if (searchText) {
             let pokemon = searchText.toLowerCase()
@@ -71,14 +119,39 @@ const SearchPokemon = () => {
         if (e.key === "Enter")
             searchPokemon();
     }
-
+    const handleInputChange = e => debouncedSetSearchText(e.target.value);
+    console.log(suggestedPokemons, searchText);
     return (<Container>
         <Text>Pokemon's name or No.</Text>
         <SearchBar>
-            <Input autoFocus type="text" placeholder="e.g. 150 or Mewtwo" onChange={({ target: { value } }) => setSearchText(value)} onKeyDown={handleKeyDown} />
+            <div>
+                <Input autoFocus type="text" placeholder="e.g. 150 or Mewtwo" onChange={handleInputChange} onKeyDown={handleKeyDown} />
+                {suggestedPokemons && suggestedPokemons.length > 0 &&
+                    <ul>
+                        {suggestedPokemons.map((item, i) =>
+                            <Link to={`/pokemon/${item.url.slice(42, -1)}`} key={i}>
+                                <li>
+                                    <strong>{item.name.slice(0, searchText.length)}</strong>
+                                    {item.name.slice(searchText.length)}
+
+                                </li>
+                            </Link>
+                        )}
+                    </ul>}
+            </div>
             <Button onClick={searchPokemon}><FontAwesomeIcon icon={faMagnifyingGlass} /></Button>
         </SearchBar>
     </Container>)
+};
+
+const debounce = (callback, delay) => {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            callback(...args);
+        }, delay);
+    };
 };
 
 export default SearchPokemon;

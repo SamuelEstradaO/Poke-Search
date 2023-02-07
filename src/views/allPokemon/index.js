@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { fetchMorePokemon, fetchAllPokemon, fetchPokemon } from "../../redux/actions/pokemon";
 import styled from "styled-components";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 
-import {  isFetchingMorePokemonsSel, pokemonInfoSel } from "../../redux/selectors";
+import { fetchMorePokemon, fetchAllPokemon, fetchPokemon } from "../../redux/actions/pokemon";
+import { isFetchingMorePokemonsSel, pokemonInfoSel } from "../../redux/selectors";
 import Preview from "./components/Preview";
 import ListItem from "./components/ListItem";
 import Loader from "./components/Loader";
@@ -59,10 +59,10 @@ const PokemonList = styled.div`
 const AllPokemon = () => {
     const dispatch = useDispatch();
     // const isFetchingMorePokemons = useSelector(isFetchingMorePokemonsSel, shallowEqual)
-    const { pokemons, pokemon  } = useSelector(pokemonInfoSel);
-    const [preview, setPreview] = useState({name: "?????",faQuestion})
+    const { pokemons, pokemon } = useSelector(pokemonInfoSel);
+    const [preview, setPreview] = useState({ name: "?????", faQuestion })
     useEffect(() => {
-        if(pokemon.name){
+        if (pokemon.name) {
             setPreview(pokemon);
             console.log(preview);
         }
@@ -72,15 +72,15 @@ const AllPokemon = () => {
     };
     return (<GridContainer>
         <Preview pokemon={preview} />
-        
+
         <PokemonList>
-        {pokemons.results?.map((pokemon, i) => <ListItem key={i} pokemon={pokemon} handleClick={()=> handleClick(pokemon)}/>)}
+            {pokemons.results?.map((pokemon, i) => <ListItem key={i} pokemon={pokemon} handleClick={() => handleClick(pokemon)} />)}
         </PokemonList>
-        </GridContainer>)
+    </GridContainer>)
 }
 
 export default AllPokemon;
-{/* {pokemons.results &&  */}
+{/* {pokemons.results &&  */ }
 // hasNextPage={pokemons.next? true : false}
             // items={pokemons}
             // isFetchingMorePokemons={isFetchingMorePokemons}
