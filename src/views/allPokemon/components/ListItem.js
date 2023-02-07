@@ -8,6 +8,7 @@ const Button = styled.button`
     border: none;
     border-radius: 10px;
     width: 70%;
+    height: fit-content;
     padding: 1rem 0;
     display: flex;
     justify-content: space-around;
@@ -52,14 +53,14 @@ export const H6 = styled(H6Base)`
     padding-left: 0.5rem;
 `
 
-const ListItem = ({pokemon, handleClick}) => {
+const ListItem = ({ pokemon, handleClick }) => {
     const navigate = useNavigate();
     const handleDbClick = (e) => {
-        if(e.detail >= 2) navigate(`/pokemon/${pokemon.url.slice(42, -1)}`);
+        if (e.detail >= 2) navigate(`/pokemon/${pokemon.url.slice(42, -1)}`);
     }
-    return (<Button onFocus={handleClick} onClick={handleDbClick}><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="poke-ball"/>
+    return (<Button onFocus={handleClick} onClick={handleDbClick}><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="poke-ball" />
         <div><H6>#{pokemon.url.slice(42, -1)} {pokemon.name}</H6></div>
-        </Button>)    
+    </Button>)
 }
 
 export default ListItem;

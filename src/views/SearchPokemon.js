@@ -112,7 +112,7 @@ const SearchPokemon = () => {
         if (searchText) {
             let pokemon = searchText.toLowerCase()
             pokemon = pokemon.replace(" ", "-").replace(".", "");
-            navigate(`../${pokemon}`);
+            navigate(`../?search=${pokemon}`);
         }
     }
     const handleKeyDown = e => {

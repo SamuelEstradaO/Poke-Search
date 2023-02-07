@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 
@@ -58,6 +59,8 @@ const PokemonList = styled.div`
 
 const AllPokemon = () => {
     const dispatch = useDispatch();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const search = searchParams.get("search");
     // const isFetchingMorePokemons = useSelector(isFetchingMorePokemonsSel, shallowEqual)
     const { pokemons, pokemon } = useSelector(pokemonInfoSel);
     const [preview, setPreview] = useState({ name: "?????", faQuestion })
@@ -74,7 +77,13 @@ const AllPokemon = () => {
         <Preview pokemon={preview} />
 
         <PokemonList>
-            {pokemons.results?.map((pokemon, i) => <ListItem key={i} pokemon={pokemon} handleClick={() => handleClick(pokemon)} />)}
+            {!search ?
+                pokemons.results?.map((pokemon, i) =>
+                    <ListItem key={i} pokemon={pokemon} handleClick={() => handleClick(pokemon)} />) :
+                pokemons.results?.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()))
+                    .map((pokemon, i) =>
+                        <ListItem key={i} pokemon={pokemon} handleClick={() => handleClick(pokemon)} />)
+            }
         </PokemonList>
     </GridContainer>)
 }
