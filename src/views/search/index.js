@@ -1,12 +1,12 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
-import { FontAwesome, H2 } from "../theme";
-import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { pokemonInfoSel } from "../redux/selectors";
+
+import { FontAwesome, H2 } from "../../theme";
+import { pokemonInfoSel } from "../../redux/selectors";
+import ListItem from "./components/ListItem";
 
 const Container = styled.div`
     display: flex;
@@ -29,40 +29,23 @@ const SearchBar = styled.div`
         position: relative;
         width: 100%;
     }
-    & ul{
-        list-style: none outside;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-        overflow-y: auto;
-        height: 20vh;
-        border: 1px solid #d4d4d4;
-        border-top: none;
-        border-bottom: none;
-        z-index: 99;
-        & li {
-            padding: 10px;
-            font-size: calc(${({ theme }) => theme.font.size.mobile.medium} * 0.8);
-            border-bottom: 1px solid #d4d4d4;
-            @media (min-width: 768px){
-                font-size: calc(${({ theme }) => theme.font.size.desktop.medium} * 0.8);
-            }
-        }
-        
-        & li:hover{
-            background-color: rgba(1, 252, 231,0.8);
-        }
-        & a{
-            text-decoration: none;
-            color: black;
-            
-        }
-    }
+`
+const Ul = styled.ul`
+    list-style: none outside;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 20vh;
+    border: 1px solid #d4d4d4;
+    border-top: none;
+    border-bottom: none;
+    z-index: 99;
 `
 
 const Button = styled.button`
@@ -133,15 +116,11 @@ const SearchPokemon = () => {
             <div>
                 <Input autoFocus type="text" placeholder="e.g. 150 or Mewtwo" onChange={handleInputChange} onKeyDown={handleKeyDown} />
                 {suggestedPokemons && suggestedPokemons.length > 0 &&
-                    <ul>
+                    <Ul>
                         {suggestedPokemons.map((item, i) =>
-                            <Link to={`/pokemon/${item.url.slice(42, -1)}`} key={i}>
-                                <li>
-                                    #{item.url.slice(42, -1)} {item.name}
-                                </li>
-                            </Link>
+                            <ListItem item={item} key={i} />
                         )}
-                    </ul>}
+                    </Ul>}
             </div>
             <Button onClick={searchPokemon}><FontAwesomeIcon icon={faMagnifyingGlass} /></Button>
         </SearchBar>

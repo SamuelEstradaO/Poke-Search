@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 
 import Header from "../views/components/Header";
 import NotImplemented from "../views/NotImplemented";
-import SearchPokemon from "../views/SearchPokemon";
+import SearchPokemon from "../views/search";
 import Results from "../views/results";
 import ErrorComponent from "../views/components/ErrorComponent";
 import Index from "../views";
