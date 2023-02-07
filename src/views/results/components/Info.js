@@ -61,7 +61,7 @@ const FontAwesome = styled(FontAwesomeIcon)`
 
 const Info = ({ gridArea, setSprite }) => {
     const { pokemon } = useSelector(pokemonInfoSel, shallowEqual);
-    const {flavor_text: flavorText} = pokemon.speciesData.flavor_text_entries.find( ({ language }) => language.name === "en")
+    const {flavor_text: flavorText} = pokemon.speciesData.flavor_text_entries.find( ({ language }) => language.name === "en") || {};
     return (<Div gridArea={gridArea}>
         <P>{flavorText}</P>
         <H4>No: {pokemon.id}</H4>
