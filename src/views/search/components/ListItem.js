@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -8,7 +9,10 @@ const Li = styled.li`
     @media(min-width: 768px) {
         font-size: calc(${({ theme }) => theme.font.size.desktop.medium} * 0.8);
     }
-    &:hover{
+    &:hover {
+        background-color: rgba(1, 252, 231, 0.8);
+    }
+    & .selected{
         background-color: rgba(1, 252, 231, 0.8);
     }
 `
@@ -17,13 +21,13 @@ const Item = styled(Link)`
     color: black;
 `
 
-const ListItem = ({ item }) => {
+const ListItem = forwardRef(({ item }, ref) => {
 
-    return (<Item to={`/pokemon/${item.url.slice(42, -1)}`}>
+    return (<Item to={`/pokemon/${item.url.slice(42, -1)}`} ref={ref}>
         <Li>
             #{item.url.slice(42, -1)} {item.name}
         </Li>
     </Item>)
-}
+},)
 
 export default ListItem;

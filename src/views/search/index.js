@@ -1,12 +1,16 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useState, useCallback, useMemo } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { useAutocomplete } from '@mui/base/AutocompleteUnstyled';
 
 import { FontAwesome, H2 } from "../../theme";
 import { pokemonInfoSel } from "../../redux/selectors";
 import ListItem from "./components/ListItem";
+import { useRef } from "react";
+import { useEffect } from "react";
+
 
 const Container = styled.div`
     display: flex;
@@ -41,7 +45,8 @@ const Ul = styled.ul`
     padding: 0;
     overflow-x: hidden;
     overflow-y: auto;
-    height: 20vh;
+    height: fit-content;
+    max-height: 20vh;
     border: 1px solid #d4d4d4;
     border-top: none;
     border-bottom: none;
@@ -82,11 +87,26 @@ const FontAwesomeIcon = styled(FontAwesome)`
         font-size: calc(${({ theme }) => theme.font.size.desktop.large}*1.5);
     }
 `
-
+const Li = styled.li`
+    padding: 10px;
+    font-size: calc(${({ theme }) => theme.font.size.mobile.medium} * 0.8);
+    border-bottom: 1px solid #d4d4d4;
+    @media(min-width: 768px) {
+        font-size: calc(${({ theme }) => theme.font.size.desktop.medium} * 0.8);
+    }
+    &.Mui-focused, .Mui-focusVisible {
+        background-color: rgba(1, 252, 231, 0.8);
+    }
+`
 const SearchPokemon = () => {
     const { pokemons } = useSelector(pokemonInfoSel);
     const [searchText, setSearchText] = useState();
-    const debouncedSetSearchText = useCallback(debounce(text => setSearchText(text), 400), []);
+    const [hideOptions, setHideOptions] = useState(true);
+    const [highlightedIndex, setHiglightedIndex] = useState(-1);
+    const suggestedRef = useRef([]);
+    const debouncedSetSearchText = useCallback(debounce(text => {
+        setSearchText(text);
+    }, 400), []);
     const navigate = useNavigate();
     const suggestedPokemons = useMemo(() => {
         let suggestions = []
@@ -104,23 +124,70 @@ const SearchPokemon = () => {
             navigate(`../?search=${pokemon}`);
         }
     }
-    const handleKeyDown = e => {
-        if (e.key === "Enter")
-            searchPokemon();
+
+    const handleKeyDown = (e) => {
+        switch (e.key) {
+            case "Enter":
+                searchPokemon();
+                break;
+            case "Escape":
+                setHideOptions(true);
+                break;
+            case "ArrowDown":
+                e.preventDefault();
+                highlightedIndex === suggestedPokemons.length - 1 ? setHiglightedIndex(0) : setHiglightedIndex(highlightedIndex + 1);
+                break;
+            case "ArrowUp":
+                e.preventDefault();
+                highlightedIndex <= 0 ? setHiglightedIndex(suggestedPokemons.length - 1) : setHiglightedIndex(highlightedIndex - 1);
+                break;
+            default:
+                break;
+        }
     }
-    const handleInputChange = e => debouncedSetSearchText(e.target.value);
-    console.log(suggestedPokemons, searchText);
+    const handleInputChange = (e, value) => {
+        console.log(e)
+        debouncedSetSearchText(value);
+    };
+    const handleBlur = () => {
+        highlightedIndex < 0 && setHideOptions(true);
+    }
+    const handleFocus = () => searchText ? setHideOptions(false) : null;
+
+    const {
+        getRootProps,
+        getInputLabelProps,
+        getInputProps,
+        getListboxProps,
+        getOptionProps,
+        groupedOptions,
+    } = useAutocomplete({
+        id: 'use-autocomplete',
+        options: pokemons.results,
+        getOptionLabel: (option) => `${option.name && option.name.replace("-", " ")}`,
+        onInputChange: handleInputChange,
+        filterOptions: (options, state) => {
+            console.log(state);
+            let validOptions = state.inputValue !== "" ? options.filter(option =>
+                (option.url && option.url.slice(42, -1).includes(state.inputValue)) ||
+                (option.name && option.name.toLowerCase().includes(state.inputValue.toLowerCase().replace(" ", "-")))) : options;
+            return validOptions;
+        },
+        freeSolo: true,
+    });
+    // #${ option.url.slice(42, -1) } 
     return (<Container>
         <Text>Pokemon's name or No.</Text>
         <SearchBar>
-            <div>
-                <Input autoFocus type="text" placeholder="e.g. 150 or Mewtwo" onChange={handleInputChange} onKeyDown={handleKeyDown} />
-                {suggestedPokemons && suggestedPokemons.length > 0 &&
-                    <Ul>
-                        {suggestedPokemons.map((item, i) =>
-                            <ListItem item={item} key={i} />
-                        )}
-                    </Ul>}
+            <div {...getRootProps()}>
+                <Input {...getInputProps()} autoFocus type="text" placeholder="e.g. 150 or Mewtwo" />
+                {groupedOptions.length > 0 ?
+                    <Ul {...getListboxProps()}>
+                        {groupedOptions.map((option, index) => (
+                            <Li {...getOptionProps({ option, index })}>{`#${option.url.slice(42, -1)} ${option.name.replace("-", " ")}`}</Li>
+                        ))}
+                    </Ul> : null
+                }
             </div>
             <Button onClick={searchPokemon}><FontAwesomeIcon icon={faMagnifyingGlass} /></Button>
         </SearchBar>
@@ -138,3 +205,10 @@ const debounce = (callback, delay) => {
 };
 
 export default SearchPokemon;
+
+// filterOptions: (options, state) => {
+//     console.log(state);
+//     let validOptions = state.inputValue !== "" ? options.filter(option => option.name ? option.name.toLowerCase().includes(state.inputValue.toLowerCase().replace(" ", "-")) :
+//         option.url ? option.url.slice(42, -1).includes(state.inputValue) : false) : options;
+//     return validOptions;
+// },
