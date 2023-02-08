@@ -75,7 +75,7 @@ const InputField = ({ setSearchText, gridArea = false }, search = "") => {
     } = useAutocomplete({
         id: 'use-autocomplete',
         options: pokemons.results,
-        getOptionLabel: (option) => `${option.name && option.name.replace("-", " ")}`,
+        getOptionLabel: (option) => Object.hasOwn(option, "name") ? `${option.name && option.name.replace("-", " ")}` : option,
         onInputChange: handleInputChange,
         filterOptions: (options, state) => {
             let suggestedOptions = state.inputValue !== "" ? options.filter(option =>
