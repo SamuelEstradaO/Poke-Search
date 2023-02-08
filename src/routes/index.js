@@ -17,6 +17,7 @@ import AllPokemon from "../views/allPokemon";
 import Random from "../views/components/Random";
 import { fetchAllPokemon } from "../redux/actions/pokemon";
 
+
 const Routes = () => {
     const dispatch = useDispatch();
     const router = createHashRouter(createRoutesFromElements(
@@ -43,5 +44,15 @@ const Routes = () => {
         <RouterProvider router={router} />
     )
 }
+
+export const debounce = (callback, delay) => {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            callback(...args);
+        }, delay);
+    };
+};
 
 export default Routes;

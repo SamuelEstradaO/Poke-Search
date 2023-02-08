@@ -7,7 +7,7 @@ import {
     successFetchingAllPokemon,
     startFetchingMorePokemon,
     successFetchingMorePokemon,
-} from "../actions/pokemon"
+} from "../actions/pokemon";
 
 const initialState = {
     pokemon: {},
@@ -77,7 +77,7 @@ const pokemonReducer = createReducer(initialState, builder => {
                 pokemons: action.payload.data,
             }
         })
-        .addDefaultCase((state, action)=> {
+        .addDefaultCase((state, action) => {
             return state
         })
 });

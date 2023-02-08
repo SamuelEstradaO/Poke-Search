@@ -11,6 +11,11 @@ const Grid = styled.div`
     justify-items: center;
     height: 65%;
     min-height: 250px;
+    grid-row: 2;
+    @media(min-width: 768px){
+        grid-row: 2;
+        grid-column: 1;
+    }
 `
 
 const ImgContainer = styled.div`
