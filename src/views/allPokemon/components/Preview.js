@@ -77,16 +77,16 @@ const Preview = ({ pokemon }) => {
     const handleHover = () => setPopUp("PopUp");
     const handleMouseLeave = () => setPopUp("");
     return (<Grid>
-        <H2>{pokemon.species ? `#${pokemon.species.url?.slice(42, -1)} ${pokemon.name}` : pokemon.name}</H2>
-        {pokemon.sprites ? 
-        <ImgContainer>
-            <Img src={pokemon.sprites.front_default} />
-            {pokemon.species &&<IconContainer to={`/pokemon/${pokemon.species.url.slice(42, -1)}`} onMouseEnter={handleHover} onMouseLeave={handleMouseLeave}>
-                <FontAwesomeIcon icon={faCircleInfo}/>
-            </IconContainer>}
-            <span className={popUp}>See detailed info</span>
-            </ImgContainer> : 
-            <FontAwesome icon={pokemon.faQuestion} />}           
+        <H2>{pokemon.species ? `#${pokemon.species.url?.slice(42, -1)} ${pokemon.name.replace("-", " ")}` : pokemon.name}</H2>
+        {pokemon.sprites ?
+            <ImgContainer>
+                <Img src={pokemon.sprites.front_default} />
+                {pokemon.species && <IconContainer to={`/pokemon/${pokemon.species.url.slice(42, -1)}`} onMouseEnter={handleHover} onMouseLeave={handleMouseLeave}>
+                    <FontAwesomeIcon icon={faCircleInfo} />
+                </IconContainer>}
+                <span className={popUp}>See detailed info</span>
+            </ImgContainer> :
+            <FontAwesome icon={pokemon.faQuestion} />}
     </Grid>)
 }
 

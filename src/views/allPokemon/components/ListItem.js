@@ -59,7 +59,7 @@ const ListItem = ({ pokemon, handleClick }) => {
         if (e.detail >= 2) navigate(`/pokemon/${pokemon.url.slice(42, -1)}`);
     }
     return (<Button onFocus={handleClick} onClick={handleDbClick}><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="poke-ball" />
-        <div><H6>#{pokemon.url.slice(42, -1)} {pokemon.name}</H6></div>
+        <div><H6>#{pokemon.url.slice(42, -1)} {pokemon.name.replace("-", " ")}</H6></div>
     </Button>)
 }
 
