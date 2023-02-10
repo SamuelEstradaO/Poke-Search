@@ -1,5 +1,5 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
@@ -8,25 +8,36 @@ import { useAutocomplete } from '@mui/base/AutocompleteUnstyled';
 import { FontAwesome, H2 } from "../../theme";
 import { pokemonInfoSel } from "../../redux/selectors";
 import InputField from "./components/InputField";
+import List from "./components/List";
+import { HeaderContext } from "../../routes";
 
-
+const Main = styled.main`
+    width: 100vw;
+    display: grid;
+    grid-template-rows: auto;
+    justify-items: center;
+`
 const Container = styled.div`
+    position: sticky;
+    top: ${({ header_height }) => header_height}px;
     display: flex;
     flex-wrap: wrap;
-    height: 90vh;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
     margin: auto;
-    max-width: 70%;
     justify-content: center;
     align-content:center;
-    @media(min-width: 768px){
-        max-width: 600px;
-    }
+    background-color: white;
 `
 const SearchBar = styled.div`
     display: grid;
     grid-template-columns: 5fr 1fr;
     height: fit-content;
-    width: 100%;
+    max-width: 70%;
+    @media(min-width: 768px){
+        max-width: 600px;
+    }
 `
 
 const Button = styled.button`
@@ -43,7 +54,10 @@ const Button = styled.button`
 `
 const Text = styled(H2)`
     height: fit-content;
-    width: 100%;
+    max-width: 70%;
+    @media(min-width: 768px){
+        max-width: 600px;
+    }
 `
 
 const FontAwesomeIcon = styled(FontAwesome)`
@@ -54,8 +68,12 @@ const FontAwesomeIcon = styled(FontAwesome)`
 `
 
 const SearchPokemon = () => {
+    const containerElement = useRef();
+    const { headerHeight } = useContext(HeaderContext);
+    const { pokemons } = useSelector(pokemonInfoSel);
     const [searchText, setSearchText] = useState();
     const navigate = useNavigate();
+
     const searchPokemon = () => {
         if (searchText) {
             let pokemon = searchText.toLowerCase()
@@ -73,16 +91,18 @@ const SearchPokemon = () => {
                 break;
         }
     }
-
-
+    console.log(headerHeight)
     // #${ option.url.slice(42, -1) } 
-    return (<Container>
-        <Text>Pokemon's name or No.</Text>
-        <SearchBar>
-            <InputField setSearchText={setSearchText} />
-            <Button onClick={searchPokemon}><FontAwesomeIcon icon={faMagnifyingGlass} /></Button>
-        </SearchBar>
-    </Container>)
+    return (<Main>
+        <Container ref={containerElement} header_height={headerHeight}>
+            <Text>Pokemon's name or No.</Text>
+            <SearchBar>
+                <InputField setSearchText={setSearchText} />
+                <Button onClick={searchPokemon}><FontAwesomeIcon icon={faMagnifyingGlass} /></Button>
+            </SearchBar>
+        </Container>
+        <List searchText={searchText} />
+    </Main>)
 };
 
 

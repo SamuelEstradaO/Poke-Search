@@ -39,14 +39,16 @@ const PokemonList = styled.div`
     justify-content: center;
     column-gap: 1rem;
     row-gap: 1rem;
-    height: 80%;
+    height: fit-content;
+    max-height: 80%;
+    align-self: start;
     margin: 0 3%;
     overflow-x: auto;
     overflow-y: hidden;
     background-color: #ededed;
     grid-row: 3;
     @media (min-width: 768px){
-        padding: 0 1rem;   
+        padding: 1rem;   
         justify-content: normal;  
         display: grid;
         grid-template-rows: auto;
@@ -68,11 +70,10 @@ const gridArea = {
 const AllPokemon = () => {
     const dispatch = useDispatch();
     const location = useLocation();
-    const searchText = location.state;
-    console.log(searchText);
+    const searchTextParam = location.state;
     // const isFetchingMorePokemons = useSelector(isFetchingMorePokemonsSel, shallowEqual)
     const { pokemons, pokemon } = useSelector(pokemonInfoSel);
-    const [search, setSearch] = useState(searchText);
+    const [searchText, setSearchText] = useState(searchTextParam);
     const [preview, setPreview] = useState({ name: "?????", faQuestion })
     useEffect(() => {
         if (pokemon.name) {
@@ -83,16 +84,16 @@ const AllPokemon = () => {
         dispatch(fetchPokemon(prev.name));
     };
     return (<GridContainer>
-        {search && <InputField gridArea={gridArea} setSearchText={setSearch} search={search} />}
+        {searchTextParam && <InputField gridArea={gridArea} setSearchText={setSearchText} />}
         <Preview pokemon={preview} />
 
         <PokemonList>
-            {!search ?
+            {!searchTextParam ?
                 pokemons.results?.map((pokemon, i) =>
                     <ListItem key={i} pokemon={pokemon} handleClick={() => handleClick(pokemon)} />) :
                 pokemons.results?.filter(({ name, url }) =>
-                    name.toLowerCase().includes(search.toLowerCase()) ||
-                    url.slice(42, -1).startsWith(search))
+                    name.toLowerCase().includes(searchText.toLowerCase()) ||
+                    url.slice(42, -1).startsWith(searchText))
                     .map((pokemon, i) =>
                         <ListItem key={i} pokemon={pokemon} handleClick={() => handleClick(pokemon)} />)
             }

@@ -23,7 +23,7 @@ const Div = styled.div`
         }
     }
     & p {
-        max-width: 600px;
+        max-width: 700px;
     }
     @media (min-width: 768px){
         text-align: start;
@@ -61,7 +61,7 @@ const FontAwesome = styled(FontAwesomeIcon)`
 
 const Info = ({ gridArea, setSprite }) => {
     const { pokemon } = useSelector(pokemonInfoSel, shallowEqual);
-    const {flavor_text: flavorText} = pokemon.speciesData.flavor_text_entries.find( ({ language }) => language.name === "en") || {};
+    const { flavor_text: flavorText } = pokemon.speciesData.flavor_text_entries.find(({ language }) => language.name === "en") || {};
     return (<Div gridArea={gridArea}>
         <P>{flavorText}</P>
         <H4>No: {pokemon.id}</H4>
@@ -70,8 +70,8 @@ const Info = ({ gridArea, setSprite }) => {
         <H4>Height: {pokemon.height / 10 >= 1 ? `${pokemon.height / 10} Mt` : `${pokemon.height * 10} cm`}.</H4>
         <div>
             <H4>Gender:</H4>
-            <Button gender="male" onClick={()=> setSprite(pokemon.sprites.front_default)}><FontAwesome icon={faMars} /></Button>
-            <Button gender="female" onClick={()=> setSprite(pokemon.sprites.front_female? pokemon.sprites.front_female : pokemon.sprites.front_default)}><FontAwesome icon={faVenus}/></Button>
+            <Button gender="male" onClick={() => setSprite(pokemon.sprites.front_default)}><FontAwesome icon={faMars} /></Button>
+            <Button gender="female" onClick={() => setSprite(pokemon.sprites.front_female ? pokemon.sprites.front_female : pokemon.sprites.front_default)}><FontAwesome icon={faVenus} /></Button>
         </div>
 
     </Div>)

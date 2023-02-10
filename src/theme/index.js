@@ -49,6 +49,7 @@ export const GlobalStyler = createGlobalStyle`
         font-size: 16px;
         font-family: 'Press Start 2P', cursive;
     }
+    body
     strong{
         font-size: inherit;
     }

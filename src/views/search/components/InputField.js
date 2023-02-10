@@ -58,7 +58,7 @@ const Li = styled.li`
     }
 `
 
-const InputField = ({ setSearchText, gridArea = false }, search = "") => {
+const InputField = ({ setSearchText, gridArea = false }) => {
     const { pokemons } = useSelector(pokemonInfoSel);
     const debouncedSetSearchText = useCallback(debounce(text => {
         setSearchText(text);

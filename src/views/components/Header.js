@@ -1,11 +1,16 @@
+import { useContext, useEffect, useRef } from "react";
 import { Outlet, Link } from "react-router-dom";
 import styled from "styled-components";
+import { HeaderContext } from "../../routes";
 
 const Banner = styled.header`
     background-color: ${({ theme }) => theme.colors.bannerBg};
     width: 100%;
     height: fit-content;
     max-height: 75px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 `
 const HomeLink = styled(Link)`
     display: flex;
@@ -34,8 +39,20 @@ height: 100%;
 `
 
 const Header = () => {
+    const { setHeaderHeight } = useContext(HeaderContext);
+    const ref = useRef();
+    useEffect(() => {
+        const updateHeight = () => {
+            setHeaderHeight(ref.current.offsetHeight);
+        };
+
+        updateHeight();
+        window.addEventListener('resize', updateHeight);
+
+        return () => window.removeEventListener('resize', updateHeight);
+    }, []);
     return (<>
-        <Banner>
+        <Banner ref={ref}>
             <HomeLink to={"/"} replace={false}>
                 <H1>Poke-Search</H1>
                 <ImgContainer>
