@@ -33,6 +33,7 @@ const Routes = () => {
                     dispatch(fetchAllPokemon());
                     return null;
                 }} />
+
                 <Route path="search" element={<SearchPokemon />} loader={() => {
                     dispatch(fetchAllPokemon());
                     return null;
@@ -47,7 +48,7 @@ const Routes = () => {
     return (
         <HeaderContext.Provider value={{ headerHeight, setHeaderHeight }}>
             <RouterProvider router={router} />
-        </HeaderContext.Provider>
+        </HeaderContext.Provider >
     )
 }
 

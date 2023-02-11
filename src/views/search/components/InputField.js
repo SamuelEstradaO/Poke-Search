@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { pokemonInfoSel } from "../../../redux/selectors";
 import { useAutocomplete } from "@mui/base";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 const Ul = styled.ul`
@@ -65,6 +65,7 @@ const InputField = ({ setSearchText, gridArea = false }) => {
     }, 400), []);
     const handleInputChange = (e, value) => {
         debouncedSetSearchText(value);
+
     };
     const {
         getRootProps,

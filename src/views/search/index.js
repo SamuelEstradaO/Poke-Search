@@ -1,5 +1,5 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { useState, useCallback, useMemo, useRef, useContext } from "react";
+import { useState, useCallback, useMemo, useRef, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
@@ -69,9 +69,9 @@ const FontAwesomeIcon = styled(FontAwesome)`
 
 const SearchPokemon = () => {
     const containerElement = useRef();
+    const [searchText, setSearchText] = useState("")
     const { headerHeight } = useContext(HeaderContext);
     const { pokemons } = useSelector(pokemonInfoSel);
-    const [searchText, setSearchText] = useState();
     const navigate = useNavigate();
 
     const searchPokemon = () => {

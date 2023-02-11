@@ -11,7 +11,10 @@ const Card = styled(Link)`
     align-items: center;
     text-decoration: none;
     color: black;
-    flex-basis: 50%;
+    flex-basis: 100%;
+    @media(min-width: 470px){
+        flex-basis: 50%;
+    }
     @media(min-width: 768px){
         flex-basis: 25%;
     }
@@ -19,34 +22,58 @@ const Card = styled(Link)`
 const Li = styled.li`
     list-style: none;
     width: 95%;
-    border: 1px solid red;
+    border: 1px solid gray;
     display: flex;
     flex-flow: column wrap;
     justify-content: space-evenly;
     align-items: center;
     align-content: center;
     height: 350px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+`
+const Figure = styled.figure`
+    width: 90%;
+    text-align: center;
+    margin: 0;
+    
+    white-space: nowrap;
+`
+const FigCaption = styled.figcaption`
+    text-overflow: ellipsis;
+    overflow: hidden;
 `
 const H6 = styled(H6Base)`
     margin: 0;
     color: black;
+    font-size:80%;
+    white-space: ;
 `
 const Div = styled.div`
     display: grid;
+    padding: 10px;
     width: 95%;
-    grid-template-rows: auto;
+    grid-template-rows: 10% 70% 20%;
     border: 1px solid gray;
-    
+    overflow-wrap: anywhere;
     height: 200px;
     font-size: ${({ theme }) => theme.font.size.mobile.small};
     @media (min-width: 768px){
         font-size: ${({ theme }) => theme.font.size.desktop.small};
     }
+    & .flavor-text{
+        display: block;
+        overflow: auto;
+        @media(min-width: 768px){
+            display: block;
+        }
+    }
 `
 const Span = styled.span`
     text-align: center;
-    font-size: inherit;
+    font-size: 90%;
+
 `
+
 const PokemonCard = ({ pokemon, data = {}, loading }) => {
     const { flavor_text: flavorText } = Object.hasOwn(data, "speciesData") ? data.speciesData.flavor_text_entries.find(({ language }) => language.name === "en") || {} : {};
     return (
@@ -54,13 +81,13 @@ const PokemonCard = ({ pokemon, data = {}, loading }) => {
             <Li>
                 {!loading && data &&
                     <>
-                        <figure>
-                            <figcaption><H6>{pokemon.name}</H6></figcaption>
+                        <Figure>
+                            <FigCaption><H6>{pokemon.name.replace("-", " ")}</H6></FigCaption>
                             <img src={data.sprites.front_default} alt={pokemon.name} />
-                        </figure>
+                        </Figure>
                         <Div>
                             <H6>No: {pokemon.url.slice(42, -1)}</H6>
-                            {flavorText && <H6>{flavorText}</H6>}
+                            {flavorText && <H6 className="flavor-text">{flavorText}</H6>}
                             <Span>{data.types.map(({ type }, i) => <Type key={i} type={type.name} />)}</Span>
                         </Div>
                     </>}
