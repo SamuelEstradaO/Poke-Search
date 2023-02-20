@@ -20,6 +20,7 @@ const Card = styled(Link)`
     }
 `
 const Li = styled.li`
+    background-color: rgba(227, 195, 67, 0.7);
     list-style: none;
     width: 95%;
     border: 1px solid gray;
@@ -30,12 +31,21 @@ const Li = styled.li`
     align-content: center;
     height: 350px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: background-color 0.25s ease-out;
+    &:hover{
+        background-color: rgba(227, 195, 67, 1);
+        transition: background-color 0.25s ease-out;
+        transform: scale(1.05, 1.05);
+        transition: transform 0.25s;
+    }
 `
 const Figure = styled.figure`
-    width: 90%;
+    border: 1px solid gray;
+    width: 95%;
     text-align: center;
     margin: 0;
-    
+    padding-top: 2%; 
+    background-color: #f8f8ff;
     white-space: nowrap;
 `
 const FigCaption = styled.figcaption`
@@ -49,6 +59,7 @@ const H6 = styled(H6Base)`
     white-space: ;
 `
 const Div = styled.div`
+    background-color: #f8f8ff;
     display: grid;
     padding: 10px;
     width: 95%;

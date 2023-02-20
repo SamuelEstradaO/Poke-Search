@@ -27,6 +27,8 @@ const Container = styled.div`
     justify-content: center;
     align-content:center;
     background-color: white;
+    z-index: 1;
+    padding-bottom: 1%;
 `
 const SearchBar = styled.div`
     display: grid;
