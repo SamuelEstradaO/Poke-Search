@@ -16,13 +16,11 @@ import Index from "../views";
 import AllPokemon from "../views/allPokemon";
 import Random from "../views/components/Random";
 import { fetchAllPokemon } from "../redux/actions/pokemon";
-import { createContext, useState } from "react";
+import { createContext, memo, useRef, useState } from "react";
 
-export const HeaderContext = createContext({})
 
 
 const Routes = () => {
-    const [headerHeight, setHeaderHeight] = useState(0);
     const dispatch = useDispatch();
     const router = createHashRouter(createRoutesFromElements(
         <Route path="/" element={<Header />} >
@@ -46,10 +44,8 @@ const Routes = () => {
         </Route>
     ))
     return (
-        <HeaderContext.Provider value={{ headerHeight, setHeaderHeight }}>
-            <RouterProvider router={router} />
-        </HeaderContext.Provider >
+        <RouterProvider router={router} />
     )
 }
 
-export default Routes;
+export default memo(Routes);

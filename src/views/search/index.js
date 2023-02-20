@@ -3,13 +3,12 @@ import { useState, useCallback, useMemo, useRef, useContext, useEffect } from "r
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { useAutocomplete } from '@mui/base/AutocompleteUnstyled';
 
 import { FontAwesome, H2 } from "../../theme";
 import { pokemonInfoSel } from "../../redux/selectors";
 import InputField from "./components/InputField";
 import List from "./components/List";
-import { HeaderContext } from "../../routes";
+import { HeaderContext } from "../components/Header";
 
 const Main = styled.main`
     width: 100vw;
@@ -19,7 +18,6 @@ const Main = styled.main`
 `
 const Container = styled.div`
     position: sticky;
-    top: ${({ header_height }) => header_height}px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -70,9 +68,23 @@ const FontAwesomeIcon = styled(FontAwesome)`
 const SearchPokemon = () => {
     const containerElement = useRef();
     const [searchText, setSearchText] = useState("")
-    const { headerHeight } = useContext(HeaderContext);
+    const ref = useContext(HeaderContext);
     const { pokemons } = useSelector(pokemonInfoSel);
     const navigate = useNavigate();
+    useEffect(() => {
+        const setStickyElementTop = () => {
+            const stickyElementHeight = ref.current.offsetHeight;
+            containerElement.current.style.top = stickyElementHeight + 'px';
+        };
+
+        setStickyElementTop();
+
+        window.addEventListener('resize', setStickyElementTop);
+
+        return () => {
+            window.removeEventListener('resize', setStickyElementTop);
+        };
+    }, [])
 
     const searchPokemon = () => {
         if (searchText) {
@@ -91,10 +103,9 @@ const SearchPokemon = () => {
                 break;
         }
     }
-    console.log(headerHeight)
     // #${ option.url.slice(42, -1) } 
     return (<Main>
-        <Container ref={containerElement} header_height={headerHeight}>
+        <Container ref={containerElement} >
             <Text>Pokemon's name or No.</Text>
             <SearchBar>
                 <InputField setSearchText={setSearchText} />
